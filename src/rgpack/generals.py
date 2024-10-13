@@ -4,6 +4,7 @@ General functions
 """
 import fnmatch
 import os
+import pickle
 from collections import defaultdict
 
 
@@ -54,3 +55,34 @@ def recursive_finder(pattern, root=os.curdir):
                 recursive_finder(dir_)
         for filename in fnmatch.filter(files, pattern):
             yield os.path.join(path, filename)
+
+
+def pickle_to_file(data, file_name):
+    """
+    Save a data structure to a file using pickle
+
+    Args:
+        data: data to save
+        file_name: path to the file to save the data
+
+    Returns:
+        file_name: path to the file
+    """
+    with open(file_name, 'wb') as file:
+        pickle.dump(data, file)
+    return file_name
+
+
+def unpickle_from_file(file_name):
+    """
+    Load a data structure from a file using pickle
+
+    Args:
+        file_name: path to the file to load the data
+
+    Returns:
+        data: data loaded from the file
+    """
+    with open(file_name, 'rb') as file:
+        data = pickle.load(file)
+    return data
